@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-1Thin.ttf");
+  font-weight: 100;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-2ExtraLight.ttf");
+  font-weight: 200;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-3Light.ttf");
+  font-weight: 300;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-4Regular.ttf");
+  font-weight: 400;
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-5Medium.ttf");
+  font-weight: 500;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-6SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-7Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-8ExtraBold.ttf");
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-9Black.ttf");
+  font-weight: 900;
 }
