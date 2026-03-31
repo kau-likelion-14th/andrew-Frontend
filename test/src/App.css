@@ -51,3 +51,16 @@
   src: url("./assets/font/Paperlogy-9Black.ttf");
   font-weight: 900;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* 가로로 삐져나가는 모든 것을 숨깁니다 */
+  overflow-x: hidden; 
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
