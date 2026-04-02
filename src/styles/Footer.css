@@ -1,0 +1,61 @@
+.footer {
+    width: 100%;
+    background:rgba(220, 248, 241, 0.75); /* 이미지와 유사한 연한 민트톤 */
+    padding: 60px 40px; /* 위아래 여백을 넉넉히 */
+    font-family: "Paperlogy", sans-serif;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* 각 섹션 간의 간격 */
+}
+
+/* 상단 로고 영역 */
+.footer-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.footer-title-text {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* 중단 설명 영역 */
+.footer-mid {
+    font-size: 16px;
+    font-weight: 500;
+    color: #8f8f8f;
+
+    margin-bottom: 30px;
+}
+
+/* 하단 상세 정보 영역 (Flex wrapping 사용) */
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap; /* 내용이 길어지면 다음 줄로 */
+    gap: 20px 40px; /* 행 간격 20px, 열 간격 40px */
+    font-size: 14px;
+}
+
+.info-item {
+    display: flex;
+    gap: 12px;
+}
+
+.value {
+    font-weight: 600;
+    color: #8f8f8f; /* 라벨은 조금 더 연하게 */
+    white-space: nowrap;
+}
+
+.label {
+    color: #8a8a8a;
+}

@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-1Thin.ttf");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-2ExtraLight.ttf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-3Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-4Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-5Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-6SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-7Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-8ExtraBold.ttf");
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("./assets/font/Paperlogy-9Black.ttf");
+  font-weight: 900;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* 가로로 삐져나가는 모든 것을 숨깁니다 */
+  overflow-x: hidden; 
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
