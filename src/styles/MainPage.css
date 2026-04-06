@@ -1,7 +1,65 @@
 .mainpage-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 100px 0px;
-    gap: 200px;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 추가 */
+  align-items: center;
+  padding: 120px 0px; /* 고정 margin 대신 좌우 5% 유연한 여백 사용 */
+  gap: 200px; /* 캘린더와 투두 사이 간격 */
+  font-family: 'Paperlogy', sans-serif;
+}
+
+/* 캘린더 여백 제거 (반응형을 위해) */
+.calendar-container .react-calendar {
+  border: none;
+  font-family: 'Paperlogy', sans-serif;
+  width: 100%; /* 고정 440px 해제 */
+  max-width: 440px; /* 최대 너비만 제한 */
+  margin-right: 0; /* 기존 200px 제거 */
+}
+
+/* 투두 컨테이너 유연화 */
+.todo-container {
+  width: 100%;
+  max-width: 440px;
+  align-self: flex-start; 
+}
+
+/* 태블릿 및 모바일 (1024px 이하) */
+@media (max-width: 1024px) { 
+  .mainpage-container {
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center;    
+    margin: 0;              /* 기존 마진 초기화 */
+  }
+
+  .calendar-container .react-calendar {
+    max-width: 100%; /* 화면에 꽉 차게 */
+  }
+
+  .todo-container {
+    max-width: 100%;
+  }
+}
+
+/* 모바일 전용 (480px 이하) 세부 조정 */
+@media (max-width: 480px) {
+  .modal-container {
+    width: 90%;      /* 모달 너비를 화면의 90%로 */
+    padding: 20px;
+  }
+
+  .text-input {
+    width: 100%;     /* 입력창 꽉 차게 */
+    box-sizing: border-box;
+  }
+
+  .leftbutton, .rightbutton, .leftbutton2 {
+    padding: 12px 0; /* 버튼 크기 축소 */
+    width: 100%;     /* 버튼 세로로 쌓기 좋게 너비 조정 */
+    font-size: 16px;
+  }
+  
+  .modal-actions {
+    flex-direction: column; /* 모달 버튼 세로 정렬 */
+    gap: 10px;
+  }
 }
