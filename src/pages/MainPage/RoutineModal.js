@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Todo.css";
-
+import "../../styles/RoutineModal.css";
 const Days = ["월", "화", "수", "목", "금", "토", "일"];
 
 const RoutineModal = ({

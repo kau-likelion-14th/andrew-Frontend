@@ -1,0 +1,115 @@
+.routine-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.routine-close {
+  position: absolute;
+  left: 0;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.routine-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.modal-label {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.date-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.date-input {
+  width: 160px;
+  padding: 12px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  outline: none;
+}
+
+.date-initial {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.modal-categories {
+  display: flex;
+  justify-content: space-between; 
+  padding: 10px 5px;
+  margin-bottom: 30px;
+}
+
+.modal-categoryitem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.modal-categoryitem span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-categoryitem input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #666;
+}
+
+.modal-categoryitem.on span {
+  color: #6183f2;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.leftbutton2 {
+  flex: 1;
+  padding: 14px;
+  background-color: white;
+  border: 1.5px solid #6183f2;
+  border-radius: 10px;
+  color: #6183f2;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rightbutton {
+  flex: 1;
+  padding: 14px;
+  background-color: #6183f2;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -1,0 +1,81 @@
+.todo-container {
+  width: 450px;
+  font-family: 'Paperlogy', sans-serif;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.todo-title {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.todo-header-btns {
+  display: flex;
+  gap: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 5px 0;
+}
+
+.checkbox {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 2px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  background-color: #F8FAFC;
+}
+
+.checkbox.checked {
+  background-color: #4A90E2;
+  border-color: #4A90E2;
+}
+
+.checkbox.checked::after {
+  content: '✓';
+  color: white;
+  font-size: 16px;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.todo-category {
+  padding: 8px 25px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* 카테고리 색상 */
+.cat-study { background-color: #E6F6F4; color: #333; }
+.cat-exercise { background-color: #FFE5E5; color: #333; }
+.cat-etc { background-color: #FFF9C4; color: #333; }
