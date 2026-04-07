@@ -64,3 +64,13 @@ html, body {
   width: 100%;
   overflow-x: hidden;
 }
+
+.main-layout {
+  display: flex;
+  justify-content: center; /* 화면 중앙 배치 */
+  align-items: flex-start;
+  gap: 100px;              /* 캘린더와 투두 사이 간격 */
+  padding: 80px 20px;
+  background-color: #ffffff;
+  min-height: 800px;
+}
