@@ -1,0 +1,20 @@
+.friend-page {
+    margin-top: 80px;
+    width: 100%;
+    min-height: calc(100vh - 120px);
+}
+
+.friend-page__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 24px 80px;
+    box-sizing: border-box;
+}
+
+.friend-page__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: flex-start;
+}
+
