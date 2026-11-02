@@ -12,6 +12,8 @@ const config = {
   FOLLOW: {
     FOLLOWINGS: "/api/follow/followings",
     DELETE: "/api/follow",
+    SEARCH: "/api/follow/search",
+    CREATE: "/api/follow",
   },
 };
 
