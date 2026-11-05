@@ -1,0 +1,67 @@
+.friend-unfollow-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.friend-unfollow-modal__content {
+  width: min(440px, 88vw);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 44px;
+  box-sizing: border-box;
+}
+
+.friend-unfollow-modal__text {
+  margin: 0 0 26px 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: #333333;          /* ✅ 기본 텍스트 색 */
+  line-height: 1.4;
+  text-align: center;
+}
+
+.friend-unfollow-modal__name {
+  font-weight: 700;
+  color: #333333;
+}
+
+.friend-unfollow-modal__tag {
+  font-weight: 700;
+  color: #8f8f8f;
+}
+
+
+.friend-unfollow-modal__bold {
+  color: #3a3a3a;
+  font-weight: 800;
+}
+
+.friend-unfollow-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.friend-unfollow-modal__btn {
+  height: 56px;
+  border-radius: 12px;
+  border: 1.5px solid #2f2f2f;
+  background: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.friend-unfollow-modal__btn:active {
+  transform: translateY(1px);
+}
+
+.friend-unfollow-modal__btn--yes:hover,
+.friend-unfollow-modal__btn--no:hover {
+  background: rgba(0, 0, 0, 0.03);
+}

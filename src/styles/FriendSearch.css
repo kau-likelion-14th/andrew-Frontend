@@ -96,3 +96,24 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.friend-search__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.friend-search__pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.friend-search__pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

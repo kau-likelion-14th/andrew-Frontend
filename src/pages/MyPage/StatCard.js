@@ -1,20 +1,17 @@
-import React from 'react';
+import React from "react";
+import "../../styles/MyPage.css";
 
 const StatCard = ({ stats }) => {
   return (
-    <div className="stat-card">
-      <div className="stat-content-wrapper">
-        {/* 상단: 아이콘 + 제목 */}
-        <div className="stat-header">
-          <span className="stat-icon">{stats.icon}</span>
-          <span className="stat-title">{stats.title}</span>
+    <div className="state-card">
+        <div className="state-header">
+            <span className="state-icon">{stats.icon}</span>
+            <span className="state-title">{stats.title}</span>
         </div>
-        {/* 하단: 수치 */}
-        <div className="stat-value-container">
-          <span className="stat-value">{stats.statistics.value}</span>
-          <span className="stat-unit">{stats.statistics.unit}</span>
+        <div className="state-content">
+            {stats.statistics.value} 
+            <span className="state-unit">{stats.statistics.unit}</span>
         </div>
-      </div>
     </div>
   );
 };

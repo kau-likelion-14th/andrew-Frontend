@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "../../styles/Todo.css";
-import "../../styles/TodoModal.css";
 import RoutineModal from "./RoutineModal";
 
 const TodoModal = ({ 
@@ -11,7 +10,7 @@ const TodoModal = ({
     initialTodo,
     categories
 }) => {
-    const isEditMode = Boolean(initialTodo); 
+    const isEditMode = Boolean(initialTodo);
 
     const [category, setCategory] = useState("공부"); 
     const [text, setText] = useState("");
@@ -96,7 +95,7 @@ const TodoModal = ({
                     <button
                         className={`leftbutton ${isEditMode ? '' : 'disabled'}`}
                         onClick={onDelete}
-                        disabled={!isEditMode}
+                        disabled={!isEditMode} 
                     >
                         삭제
                     </button>

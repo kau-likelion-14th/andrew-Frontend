@@ -4,7 +4,7 @@ import TodoModal from "./TodoModal";
 
 const uid = () => Date.now() + Math.random();
 
-const Categories = { // 카테고리별 디자인 설정 (배경색과 글자색)
+const Categories = { 
     공부: { backgroundColor: '#E5F8F1', color: '#333' },
     운동: { backgroundColor: '#FFC8BE', color: '#333' },
     동아리: { backgroundColor: '#B6DAFF', color: '#333' },
@@ -20,30 +20,30 @@ const Categories = { // 카테고리별 디자인 설정 (배경색과 글자색
 const Todo = ({ selectedDate, todosByDate, setTodosByDate }) => {
     const dateKey = toDateKey(selectedDate);
 
-    const todos = todosByDate[dateKey] ?? []; // 해당 날짜의 할 일 목록을 가져오되, 데이터가 없으면 빈 배열([])로 처리
+    const todos = todosByDate[dateKey] ?? []; 
 
     const setTodos = (updater) => {
         setTodosByDate((prev) => {
-            const current = prev[dateKey] ?? []; // 현재 날짜의 할 일, ?? []를 붙여줌으로써, 데이터가 없는 날짜라도 **"일단 빈 상자([])를 하나 준비해줘"**라고 명령하는 것입니다. 덕분에 에러 없이 새 할 일을 그 상자에 담을 수 있
-            const nextTodos = typeof updater === "function" ? updater(current) : updater; // 업데이트 방식이 함수면 실행하고, 아니면 값 그대로 사용
-            return { ...prev, [dateKey]: nextTodos }; // 기존 데이터(...prev)는 유지하고, 현재 날짜의 데이터만 새것으로 교체
+            const current = prev[dateKey] ?? []; 
+            const nextTodos = typeof updater === "function" ? updater(current) : updater; 
+            return { ...prev, [dateKey]: nextTodos }; 
         });
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달이 열렸는지 여부
-    const [editingTodo, setEditingTodo] = useState(null); // 지금 수정 중인 할 일 정보 (새로 만들 때는 null)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTodo, setEditingTodo] = useState(null); 
 
-    const openModal = () => { // [+] 버튼 눌렀을 때 (새로 만들기)
+    const openModal = () => { 
         setEditingTodo(null);
         setIsModalOpen(true);
     };
 
-    const openEditModal = (todo) => { // 이미 있는 할 일을 클릭했을 때 (수정하기)
+    const openEditModal = (todo) => { 
         setEditingTodo(todo);
         setIsModalOpen(true);
     };
 
-    const TodoCompleted = (id) => { // 체크박스 클릭 시 완료 상태 토글 (true <-> false)
+    const TodoCompleted = (id) => { 
         setTodos((prev) =>
             prev.map((t) =>
                 t.id === id ? { ...t, completed: !t.completed } : t
@@ -51,8 +51,8 @@ const Todo = ({ selectedDate, todosByDate, setTodosByDate }) => {
         );
     };
 
-    const handledSaveTodo = ({text, category}) => { // 저장 버튼 클릭 시 (수정 또는 추가)
-        if (editingTodo) { // 1. 수정 모드일 때
+    const handledSaveTodo = ({text, category}) => { 
+        if (editingTodo) { 
             setTodos((prev) =>
                 prev.map((t) => 
                     t.id === editingTodo.id 
@@ -60,24 +60,24 @@ const Todo = ({ selectedDate, todosByDate, setTodosByDate }) => {
                         : t
                 )
             );
-        } else { // 2. 새로 추가 모드일 때
+        } else { 
             setTodos((prev) => [
-                  ...prev, // ← "기존에 있던 애들 다 데리고 와!" (복사)
+		            ...prev, 
                 { id: uid(), text, category, completed: false },
             ]);
         }
         setIsModalOpen(false);
     };
 
-    const handledDeleteTodo = () => { // 삭제 버튼 클릭 시
+    const handledDeleteTodo = () => { 
         if (!editingTodo) return;
         setTodos((prev) => prev.filter((t) => t.id !== editingTodo.id));
         setIsModalOpen(false);
     };
 
-    const counts = useMemo(() => { //통계 계산
-        const total = todos.length; // 전체 개수
-        const done = todos.filter((t) => t.completed).length; // 완료된 개수
+    const counts = useMemo(() => { 
+        const total = todos.length; 
+        const done = todos.filter((t) => t.completed).length; 
         return { total, done };
     }, [todos]);
 

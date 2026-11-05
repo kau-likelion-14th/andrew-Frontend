@@ -1,0 +1,3 @@
+/api/*  http://lte-dev-env.eba-uhe4na6c.ap-northeast-2.elasticbeanstalk.com/api/:splat  200
+
+/*  /index.html  200

@@ -7,7 +7,7 @@ import React, {
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import config from "../../Config";
-import "../../styles/LoginPage.css";
+import "../../styles/Loginpage.css";
 import kakoBtn from "../../assets/icon/kakao_login_large_wide.png";
 import bg1 from "../../assets/img/login_bg1.jpg";
 import bg2 from "../../assets/img/login_bg2.jpg";

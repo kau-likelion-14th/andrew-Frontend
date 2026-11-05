@@ -1,204 +1,323 @@
+
+
 .mypage-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 120px 170px;
+  font-family: 'Paperlogy', sans-serif;
+}
+
+.profile-container {
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 120px 40px 80px 40px; 
-  font-family: 'Pretendard', -apple-system, sans-serif;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .profile-section {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start; 
-  margin-bottom: 50px;
+  align-items: flex-start;
+  width: 100%;
 }
 
-.profile-left {
-  display: flex;
-  align-items: flex-start; 
-  gap: 25px;
-}
-
-.profile-image-container {
+.profile-image {
+  width: 150px;
+  height: 150px;
   position: relative;
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
+  flex: 0 0 150px;
+  margin-right: 35px;
 }
 
-.profile-img, 
-.profile-img-fallback {
+.profile-img{
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #eee;
-  box-sizing: border-box;
+  display: block;
 }
 
-.profile-img-fallback {
-  background-color: #eee;
-  display: flex;
-  align-items: center;    
-  justify-content: center; 
-  font-size: 65px;         
-  line-height: 0;
-  
-  padding-top: 10px; 
-  
-  overflow: hidden;
-}
-
-.edit-icon-btn {
+.profile-img-edit {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.nickname-display {
-  margin-top: 20px; 
-  font-size: 26px;
-  font-weight: 700;
-  color: #333;
-  line-height: 1.2;
+.profile-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 30px;
 }
 
-.save-btn {
-  background-color: #5d8aff;
-  color: white;
+.profile-edit {
+  padding: 15px 70px;
+  font-size: 18px;
+  background-color: #0A84FF;
   border: none;
-  border-radius: 8px;
-  margin-top: 50px;
-  padding: 12px 50px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 15px;
   cursor: pointer;
+  font-family: "Paperlogy", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  margin-left: auto;
+  margin-top: auto;
 }
 
-.input-section {
-  width: 100%;
-  max-width: 450px;
-  margin-bottom: 60px;
-}
-
-.input-group {
-  margin-bottom: 25px;
-}
-
-.input-group label {
-  display: block;
-  font-size: 15px;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 14px 18px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  font-size: 15px;
-  box-sizing: border-box;
-}
-
-.song-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  right: 15px;
-  color: #bbb;
-  font-size: 18px;
-}
-
-.divider {
-  border: 0;
-  height: 1px;
-  background-color: #eee;
-  margin-bottom: 40px;
-}
-
-/* 4. 활동 통계 영역 */
-.status-section h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 25px;
-}
-
-.stats-grid {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-}
-
-.stat-card {
-  flex: 1;
-  background-color: #f1f3f5;
-  padding: 35px 25px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: flex-start; 
-  align-items: center;
-}
-
-.stat-content-wrapper {
+.profile-info {
+  margin: 70px 0px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.profile-content-box {
+  padding: 20px 20px;
+  border-radius: 10px;
+  border: 1px solid #5c5c5c;
+  width: 450px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   gap: 12px;
 }
 
-.stat-header {
+.profile-content{
+  font-size: 16px;
+  color: #8f8f8f;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-search-icon {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.state-card {
+  width: 550px;
+  height: 150px;
+  background-color: #f1f1f1;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 45px;
+}
+
+.state-header {
+  font-size: 18px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
+}
+
+.state-icon {
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.state-content {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 60px;
+}
+
+.state-unit {
+  font-size: 16px;
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+.status-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 25px;
+}
+
+.profile-content-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: 'Paperlogy', sans-serif;
+  color: #8F8F8F;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-right: 20px;
+}
+
+/* src/styles/YoutubeModal.css */
+
+.ytm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ytm-modal {
+  width: 450px;
+  padding: 36px;
+  background: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Paperlogy", sans-serif;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.ytm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ytm-title {
+  font-size: 20px;
+  color: #333333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.ytm-close {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-weight: bolder;
+  margin-bottom: auto;
+  cursor: pointer;
+  font-family: "Paperlogy", sans-serif;
+}
+
+.ytm-tabs {
+  display: flex;
   gap: 8px;
 }
 
-.stat-icon {
-  font-size: 24px;
+.ytm-tab {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-family: "Paperlogy", sans-serif;
 }
 
-.stat-title {
-  font-size: 15px;
-  color: #666;
-  font-weight: 500;
-}
-
-.stat-value-container {
-  padding-left: 32px; 
+.ytm-searchRow {
   display: flex;
-  align-items: baseline;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.stat-value {
-  font-size: 24px;
+.ytm-input {
+  flex: 1;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  outline: none;
+  font-family: "Paperlogy", sans-serif;
+  font-size: 14px;
+}
+
+.ytm-btn {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #E5F8F1;
+  font-family: "Paperlogy", sans-serif;
+}
+
+.ytm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ytm-list {
+  margin-top: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.ytm-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ytm-itemText {
+  flex: 1;
+  min-width: 0;
+}
+
+.ytm-itemTitle {
   font-weight: 800;
-  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.stat-unit {
-  font-size: 16px;
-  font-weight: 700;
-  margin-left: 4px;
+.ytm-itemSub {
+  margin-top: 2px;
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media (max-width: 768px) {
-  .stats-grid {
-    flex-direction: column;
-  }
+.ytm-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ytm-empty {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #8F8F8F;
+}
+
+.ytm-loading {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #8F8F8F;
+}
+
+.ytm-searchRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex: 0 0 auto;
+}
+
+.ytm-tabs,
+.ytm-header {
+  flex: 0 0 auto;
 }
