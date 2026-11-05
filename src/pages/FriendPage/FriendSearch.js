@@ -1,84 +1,113 @@
-import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import api from "../../Api";
+import config from "../../Config";
+import { toFriendModel } from "./friendModel";
 import "../../styles/FriendSearch.css";
 import searchIcon from "../../assets/icon/search.png";
 
-const dummyUsers = [
-    {
-        id: "1",
-        userId: 1,
-        name: "나나",
-        tag: "1234",
-        bio: "안녕하세요! 저는 나나입니다.",
-        profileImageUrl: null,
+// 닉네임 검색 요청: 검색어와 페이지 정보는 params로 전달합니다.
+function requestSearch(nickname, page, signal) {
+  return api.get(config.FOLLOW.SEARCH, {
+    params: {
+      nickname,
+      page,
+      size: 10,
     },
-    {
-        id: "2",
-        userId: 2,
-        name: "얀",
-        tag: "2342",
-        bio: "^^",
-        profileImageUrl: null,
-    },
-    {
-        id: "3",
-        userId: 3,
-        name: "지말",
-        tag: "1214",
-        bio: "ㅎㅎ",
-        profileImageUrl: null,
-    },
-    {
-        id: "4",
-        userId: 4,
-        name: "코다",
-        tag: "1223",
-        bio: ";ㅁ;",
-        profileImageUrl: null,
-    },
-    {
-        id: "5",
-        userId: 5,
-        name: "딜런",
-        tag: "1777",
-        bio: ".",
-        profileImageUrl: null,
-    },
-];
+    signal,
+  });
+}
 
 function FriendSearch({
   title = "팔로우 요청",
-  placeholder = "이름/태그로 검색",
-  onFollow,          // 팔로우 버튼 클릭 시 부모에서 실행될 로직 (props)
-  followingList = [], // 현재 내가 팔로우 중인 친구 목록 (props)
+  placeholder = "닉네임으로 검색",
+  onFollow,
+  followingList = [],
+  followingId = null,
+  followError = "",
+  followDisabled = false,
+  refreshKey = 0,
 }) {
-  const navigate = useNavigate();
-  // query: 사용자가 입력 필드에 적는 검색어 상태 (useState)
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+  const [retryCount, setRetryCount] = useState(0);
 
-  // useMemo: followingList가 바뀔 때만 팔로잉 중인 친구 id들을 Set으로 저장하여 검색 효율 높임
-  const followingIdSet = useMemo(() => {
-    return new Set(followingList.map((x) => x.id));
-  }, [followingList]);
+  const [results, setResults] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // useMemo: query(검색어)가 바뀔 때만 dummyUsers 배열에서 필터링을 수행하여 결과 반환
-  const results = useMemo(() => {
-    const q = query.trim();
+  const nickname = query.trim();
 
-    if (!q) return [];
+  useEffect(() => {
+    if (!nickname) {
+      setResults([]);
+      setTotalPages(0);
+      setError("");
+      setLoading(false);
+      return;
+    }
 
-    return dummyUsers.filter((user) => {
-      // 이름이나 태그에 검색어가 포함되어 있는지 확인
-      return (
-        user.name.includes(q) ||
-        user.tag.includes(q) ||
-        `${user.name}#${user.tag}`.includes(q)
-      );
-    });
-  }, [query]);
+    let active = true;
+    const controller = new AbortController();
 
-  const goFriendDetail = (friend) => {
-    navigate("/friends/detail", { state: { friend } });
+    setLoading(true);
+    setError("");
+    setResults([]);
+
+    // 입력할 때마다 요청하지 않도록 300ms 기다린 뒤 검색합니다.
+    const timer = setTimeout(async () => {
+      try {
+        const { data } = await requestSearch(
+          nickname,
+          page,
+          controller.signal
+        );
+
+        if (
+          data?.isSuccess === false ||
+          !Array.isArray(data?.result?.content) ||
+          !Number.isInteger(data.result.totalPages) ||
+          data.result.totalPages < 0
+        ) {
+          throw new Error("검색 응답을 확인해 주세요.");
+        }
+
+        if (!active) return;
+
+        // 팔로우로 마지막 페이지가 사라졌다면 유효한 페이지로 이동합니다.
+        if (page > 0 && page >= data.result.totalPages) {
+          setPage(Math.max(0, data.result.totalPages - 1));
+          return;
+        }
+
+        setResults(data.result.content.map(toFriendModel));
+        setTotalPages(data.result.totalPages);
+      } catch {
+        if (active) {
+          setError("검색에 실패했습니다. 다시 시도해 주세요.");
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    }, 300);
+
+    // 검색어가 바뀌면 이전 타이머와 요청을 정리합니다.
+    return () => {
+      active = false;
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [nickname, page, retryCount, refreshKey]);
+
+  const handleChange = (event) => {
+    const nextQuery = event.target.value;
+    setQuery(nextQuery);
+    // 새 검색을 기다리는 동안 예전 결과의 버튼을 누르지 않게 합니다.
+    if (nextQuery.trim() !== nickname) {
+      setPage(0);
+      setResults([]);
+      setError("");
+    }
   };
 
   return (
@@ -94,35 +123,52 @@ function FriendSearch({
           />
         </span>
 
-        {/* input의 값이 바뀔 때마다 setQuery를 통해 query 상태를 업데이트함 */}
         <input
           className="friend-search__input"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          aria-label="닉네임 검색"
           placeholder={placeholder}
+          value={query}
+          onChange={handleChange}
         />
       </div>
 
-      {/* 검색어 존재 여부와 결과 길이에 따른 조건부 렌더링 */}
-      {query.trim() === "" ? null : results.length === 0 ? (
+      {followError && (
+        <div className="friend-search__empty" role="alert">
+          {followError}
+        </div>
+      )}
+
+      {!nickname ? (
+        <div className="friend-search__empty">
+          검색할 닉네임을 입력해 주세요.
+        </div>
+      ) : loading ? (
+        <div className="friend-search__empty" role="status">
+          검색 중...
+        </div>
+      ) : error ? (
+        <div className="friend-search__empty">
+          <p role="alert">{error}</p>
+          <button
+            type="button"
+            onClick={() => setRetryCount((count) => count + 1)}
+          >
+            다시 시도
+          </button>
+        </div>
+      ) : results.length === 0 ? (
         <div className="friend-search__empty">검색 결과가 없습니다.</div>
       ) : (
         <ul className="friend-search__list">
           {results.map((user) => {
-            // 이미 팔로우 중인지 확인하여 버튼 스타일과 활성화 상태 결정
-            const isFollowing = followingIdSet.has(user.id);
+            const isFollowing = followingList.some(
+              (friend) => friend.id === user.id
+            );
+            const isPending = followingId === user.id;
 
             return (
               <li key={user.id} className="friend-search__item">
-                <div
-                  className="friend-search__left"
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => goFriendDetail(user)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") goFriendDetail(user);
-                  }}
-                >
+                <div className="friend-search__left">
                   <div className="friend-avatar" aria-hidden="true">
                     {user.profileImageUrl ? (
                       <img
@@ -138,11 +184,13 @@ function FriendSearch({
                   <div className="friend-info">
                     <div className="friend-info__top">
                       <span className="friend-info__name">{user.name}</span>
-                      <span className="friend-info__tag">#{user.tag}</span>
+                      {user.tag && (
+                        <span className="friend-info__tag">#{user.tag}</span>
+                      )}
                     </div>
 
                     <div className="friend-info__bio">
-                      {user.bio || "한 줄 소개"}
+                      {user.bio || "소개글이 없습니다."}
                     </div>
                   </div>
                 </div>
@@ -152,18 +200,37 @@ function FriendSearch({
                   className={`friend-follow-btn ${
                     isFollowing ? "is-disabled" : ""
                   }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onFollow?.(user); // 클릭 시 부모 컴포넌트의 팔로우 처리 함수 실행
-                  }}
-                  disabled={isFollowing}
+                  disabled={
+                    isFollowing || followingId !== null || followDisabled
+                  }
+                  onClick={() => onFollow?.(user)}
                 >
-                  {isFollowing ? "팔로잉" : "팔로우"}
+                  {isPending ? "처리 중..." : isFollowing ? "팔로잉" : "팔로우"}
                 </button>
               </li>
             );
           })}
         </ul>
+      )}
+
+      {nickname && !loading && !error && totalPages > 1 && (
+        <div className="friend-search__pagination">
+          <button
+            type="button"
+            disabled={page === 0 || followingId !== null}
+            onClick={() => setPage((value) => value - 1)}
+          >
+            이전
+          </button>
+          <span> {page + 1} / {totalPages} </span>
+          <button
+            type="button"
+            disabled={page + 1 >= totalPages || followingId !== null}
+            onClick={() => setPage((value) => value + 1)}
+          >
+            다음
+          </button>
+        </div>
       )}
     </section>
   );

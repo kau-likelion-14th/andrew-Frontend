@@ -4,21 +4,8 @@ import FriendSearch from "./FriendSearch";
 import FriendUnfollowModal from "./FriendUnfollowModal";
 import api from "../../Api";
 import config from "../../Config";
+import { toFriendModel } from "./friendModel";
 import "../../styles/FriendPage.css";
-
-// 서버 응답을 기존 친구 목록 UI가 사용하는 형태로 변환합니다.
-function toFriendModel(user) {
-  const [name, tag = ""] = (user.userName || "").split("#");
-
-  return {
-    id: String(user.userId),
-    userId: user.userId,
-    name: name || "이름 없음",
-    tag,
-    bio: user.introduction || "",
-    profileImageUrl: user.profileImageUrl || null,
-  };
-}
 
 function FriendPage() {
   // 서버에서 받아온 팔로우 목록
@@ -41,6 +28,14 @@ function FriendPage() {
 
   // 렌더링 전 연속 클릭까지 막기 위한 요청 진행 여부
   const removingRef = useRef(false);
+
+  // 팔로우 요청 상태
+  const followingRef = useRef(false);
+  const [followingId, setFollowingId] = useState(null);
+  const [followError, setFollowError] = useState("");
+
+  // 값을 바꾸면 검색 결과를 서버에서 다시 조회
+  const [searchRefreshKey, setSearchRefreshKey] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -91,14 +86,61 @@ function FriendPage() {
     };
   }, [reloadCount]);
 
-  const handleFollow = () => {
-    // 과제: 실제 사용자 검색과 팔로우 추가 API 연결
-    // 더미 사용자가 서버 목록에 섞이지 않도록 로컬 추가 동작을 중단합니다.
-    alert("팔로우 기능은 준비 중입니다.");
+  const handleFollow = async (user) => {
+    if (
+      !user ||
+      loading ||
+      loadError ||
+      isModalOpen ||
+      followingRef.current ||
+      removingRef.current ||
+      followList.some((friend) => friend.id === user.id)
+    ) {
+      return;
+    }
+
+    followingRef.current = true;
+    setFollowingId(user.id);
+    setFollowError("");
+
+    try {
+      // POST 요청은 두 번째 인수에 본문을 바로 넣습니다.
+      const response = await api.post(config.FOLLOW.CREATE, {
+        toUserId: user.userId,
+      });
+
+      const data = response.data;
+
+      if (
+        data?.isSuccess === false ||
+        data?.result?.userId == null ||
+        String(data.result.userId) !== user.id
+      ) {
+        throw new Error("팔로우 응답을 확인해 주세요.");
+      }
+
+      const newFriend = toFriendModel(data.result);
+
+      // 서버 성공을 확인한 뒤에만 목록에 추가하고, 같은 id는 중복 추가하지 않습니다.
+      setFollowList((prev) =>
+        prev.some((friend) => friend.id === newFriend.id)
+          ? prev
+          : [...prev, newFriend]
+      );
+
+      // 팔로우 가능한 검색 결과도 서버에서 다시 확인합니다.
+      setSearchRefreshKey((value) => value + 1);
+    } catch {
+      setFollowError("팔로우에 실패했습니다. 다시 시도해 주세요.");
+    } finally {
+      followingRef.current = false;
+      setFollowingId(null);
+    }
   };
 
   const handleClickRemove = (friend) => {
-    if (removingRef.current) return;
+    // 팔로우 요청 중에는 언팔로우 모달을 열지 않습니다.
+    if (removingRef.current || followingRef.current) return;
 
     setSelectedFriend(friend);
     setRemoveError("");
@@ -136,6 +178,9 @@ function FriendPage() {
 
       setIsModalOpen(false);
       setSelectedFriend(null);
+
+      // 언팔로우한 사용자가 검색 결과에 다시 반영되도록 재조회합니다.
+      setSearchRefreshKey((value) => value + 1);
     } catch {
       // 실패하면 목록과 모달을 유지합니다.
       setRemoveError(
@@ -174,6 +219,15 @@ function FriendPage() {
           <FriendSearch
             onFollow={handleFollow}
             followingList={followList}
+            followingId={followingId}
+            followError={followError}
+            followDisabled={
+              loading ||
+              Boolean(loadError) ||
+              isModalOpen ||
+              isRemoving
+            }
+            refreshKey={searchRefreshKey}
           />
         </div>
       </div>
