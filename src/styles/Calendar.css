@@ -1,7 +1,11 @@
 .calendar-container .react-calendar {
     border: none;
     font-family: 'Paperlogy', sans-serif;
-    width: 440px;
+    width: 440px; 
+}
+
+.calendar-container .react-calendar__navigation {
+    margin-bottom: 18px;
 }
 
 .calendar-container
@@ -10,14 +14,14 @@
   font-size: 28px;
   font-weight: bold;
   font-family: "Paperlogy", sans-serif;
-  color: #333333;
+    color: #333333;
 }
 
-.calendar-container .react-calendar__navigation {
-    margin-bottom: 18px;
-}
 
 .calendar-container .react-calendar__navigation button {
+    border: none;
+    background-color: transparent; /*배경색을 투명하게 하라*/
+    cursor: pointer; /*마우스 커서의 모양을 '손가락 모양'으로 바꿔주는 CSS 속성*/
     font-size: 24px;
     font-weight: 900;
     color: #333333;
@@ -31,7 +35,7 @@
 }
 
 .calendar-container .react-calendar__month-view__weekdays abbr {
-    text-decoration: none; 
+    text-decoration: none; /*텍스트에 적용된 선(Line) 모양의 장식을 모두 없애겠다*/
 }
 
 .calendar-container .react-calendar__month-view__weekdays__weekday:first-child {
@@ -43,14 +47,22 @@
 }
 
 .calendar-container .react-calendar__month-view__days {
-    row-gap: 10px;
+    row-gap: 10px; /*위아래 줄 사이의 간격(틈)**을 10px만큼 벌리겠다*/
     font-size: 16px;
 }
 
+.calendar-container .react-calendar__month-view__days__day--weekend:nth-child(7n+1) {
+    color: #FF383C;
+}
+
+.calendar-container .react-calendar__month-view__days__day--weekend:nth-child(7n) {
+    color: #0A84FF;
+}
+
 .calendar-container .react-calendar__tile {
+    position: relative; /*자식 요소의 기준점이 되어주는 역할*/
     height: 80px;
     border-radius: 15px;
-    position: relative;
 }
 
 .calendar-container .react-calendar__tile::after {
@@ -71,41 +83,40 @@
   background: transparent;
 }
 
-.calendar-container .react-calendar__tile--now::after {
-  background: #f1f1f1;
-  border: 2px solid #0A84FF;
-}
-
-.calendar-container .react-calendar__month-view__days__day--weekend:nth-child(7n+1) {
-    color: #FF383C;
-}
-
-.calendar-container .react-calendar__month-view__days__day--weekend:nth-child(7n+7) {
-    color: #0A84FF;
-}
-
 .calendar-container .react-calendar__tile--active abbr,
 .calendar-container .react-calendar__tile--active:nth-child(7n + 1) abbr,
 .calendar-container .react-calendar__tile--active:nth-child(7n) abbr {
-    color: #fff;
+  color: #fff;
 }
 
-.calendar-container .react-calendar__tile--active {
-    color: #fff;
+.calendar-container .react-calendar__tile--now::after {
+  background: #f1f1f1;
+  border: 2px solid #0A84FF; 
 }
 
-/* 3. 선택된(파란색) 날짜에서 숫자도 흰색으로 보이게 추가 */
-.calendar-container .react-calendar__tile--active .tile-meta {
-    color: #fff;
+.calendar-container .react-calendar__tile--active{ 
+  background: #0A84FF;
+  border-radius: 15px;
 }
 
-.tile-meta {
-    position: absolute;
-    left: 50%;
-    top: 55px; 
-    transform: translate(-50%, -50%); 
+.tile-meta{ 
+  position: absolute; 
+  left: 50%;
+  top: 38px;   
+  transform: translateX(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #8F8F8F;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
 }
 
-.tile-done .tile-meta {
-    color: #FFC107;           /* 글자색 (어두운 회색으로 가독성 확보) */
+.tile-done .tile-meta{
+  color: #0A84FF;
+  font-size: 14px;
+  font-weight: 900;
 }

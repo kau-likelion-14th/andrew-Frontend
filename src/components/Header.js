@@ -9,7 +9,7 @@ import { useState } from "react";
 function Header() {
     const navigate = useNavigate();
     const [loggingOut, setLoggingOut] = useState(false);
-
+    
     let userName = "";
 
     try {
@@ -54,7 +54,7 @@ function Header() {
             </div>
 
             {/*메뉴*/}
-            <nav className="header-nav">
+            <nav className="header-nav">  
                 <NavLink to="/" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
                     홈
                 </NavLink>
@@ -67,7 +67,7 @@ function Header() {
                     마이페이지
                 </NavLink>
             </nav>
-
+            
             {/*사용자 정보*/}
             <div className="header-right">
                 <span className="user-name">

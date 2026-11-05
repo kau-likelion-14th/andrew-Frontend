@@ -1,61 +1,92 @@
 .footer {
-    width: 100%;
-    background:rgba(220, 248, 241, 0.75); /* 이미지와 유사한 연한 민트톤 */
-    padding: 60px 40px; /* 위아래 여백을 넉넉히 */
-    font-family: "Paperlogy", sans-serif;
-    
-    display: flex;
-    flex-direction: column;
-    gap: 24px; /* 각 섹션 간의 간격 */
+  width: 100%;
+  background: #E5F8F1;
+  padding: 56px 0;
+
+  margin: 0;
+  box-sizing: border-box;
 }
 
-/* 상단 로고 영역 */
+/* ✅ 가운데 정렬 제거: 왼쪽 기준으로 붙임 */
+.footer-inner {
+  width: 100%;
+
+  /* ✅ 헤더처럼 좌우 여백만 주고, 왼쪽 시작 */
+  padding-left: 48px;
+  padding-right: 48px;
+
+  box-sizing: border-box;
+}
+
 .footer-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .footer-logo {
-    width: 50px;
-    height: 50px;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 
-.footer-title-text {
-    font-size: 28px;
-    font-weight: 600;
-    color: #1c1c1c;
-    margin: 0;
+.footer-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333333;
+  letter-spacing: -0.5px;
 }
 
-/* 중단 설명 영역 */
-.footer-mid {
-    font-size: 16px;
-    font-weight: 500;
-    color: #8f8f8f;
-
-    margin-bottom: 30px;
+.footer-desc {
+  font-size: 20px;
+  color: #333333;
+  opacity: 0.85;
+  margin: 0;
 }
 
-/* 하단 상세 정보 영역 (Flex wrapping 사용) */
-.footer-bottom {
-    display: flex;
-    flex-wrap: wrap; /* 내용이 길어지면 다음 줄로 */
-    gap: 20px 40px; /* 행 간격 20px, 열 간격 40px */
-    font-size: 14px;
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.info-item {
-    display: flex;
-    gap: 12px;
+/* 쌍(상호명+값)들 사이 간격 / 줄 간격 */
+.footer-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  column-gap: 40px; /* ✅ (쌍)과 (쌍) 사이 */
+  row-gap: 12px;    /* ✅ 줄바꿈 됐을 때 줄 간격 */
 }
 
-.value {
-    font-weight: 600;
-    color: #8f8f8f; /* 라벨은 조금 더 연하게 */
-    white-space: nowrap;
+/* ✅ 키-밸류(라벨-값) 사이 간격 */
+.footer-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* ✅ label ↔ value 거리 여기서 조절 */
 }
 
-.label {
-    color: #8a8a8a;
+/* 색상 규칙 (너가 정한 거) */
+.footer-label {
+  color: #8F8F8F;
+  white-space: nowrap;
+}
+
+.footer-value {
+  color: #5C5C5C;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.footer-value-long {
+  white-space: normal;
+  line-height: 1.5;
 }

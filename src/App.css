@@ -1,76 +1,45 @@
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-1Thin.ttf");
-  font-weight: 100;
+  font-weight:100;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-2ExtraLight.ttf");
-  font-weight: 200;
+  font-weight:200;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-3Light.ttf");
-  font-weight: 300;
+  font-weight:300;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-4Regular.ttf");
-  font-weight: 400;
+  font-weight:400;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-5Medium.ttf");
-  font-weight: 500;
+  font-weight:500;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-6SemiBold.ttf");
-  font-weight: 600;
+  font-weight:600;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-7Bold.ttf");
-  font-weight: 700;
+  font-weight:700;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-8ExtraBold.ttf");
-  font-weight: 800;
+  font-weight:800;
 }
-
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-9Black.ttf");
-  font-weight: 900;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  /* 가로로 삐져나가는 모든 것을 숨깁니다 */
-  overflow-x: hidden; 
-}
-
-#root {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.main-layout {
-  display: flex;
-  justify-content: center; /* 화면 중앙 배치 */
-  align-items: flex-start;
-  gap: 100px;              /* 캘린더와 투두 사이 간격 */
-  padding: 80px 20px;
-  background-color: #ffffff;
-  min-height: 800px;
+  font-weight:900;
 }

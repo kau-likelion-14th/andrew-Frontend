@@ -2,12 +2,12 @@
     font-family: "KERIS";
     src: url("../assets/font/KERISKEDU_B.ttf") format("truetype");
 }
-:root {
+:root{
     --orange: #ff6000;
     --mint: #a8e6cf;
     --black: #333333;
     --gray-dark: #8f8f8f;
-    --card-bg: #ffffff;
+    --card-bg: #ffffff
 }
 
 * {
@@ -16,7 +16,7 @@
 
 body {
     margin: 0;
-    font-family: "Paperlogy", sans-serif -apple-system,'Segoe UI', Roboto, "Noto Sans KR" ,Arial, sans-serif;
+    font-family: "Paperlogy", sans-serif -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
     color: var(--black);
 }
 
@@ -26,26 +26,26 @@ body {
     overflow: hidden;
 }
 
-.login-bg {
+.login-bg{
     position: absolute;
-    inset: 0;
+    inset:0;
     background-size: cover;
     background-position: center;
     transform: scale(1.02);
 }
 
 .login-bg-overlay {
-    position: absolute;
+    position:absolute;
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0.5)
-        rgba(255, 255, 255, 0.7)
+        rgba(255,255,255,0.5),
+        rgba(255,255,255,0.7)
     );
-    backdrop-filter: blur(1px);
+    backdrop-filter:blur(1px);
 }
 
-.login-card-wrap {
+.login-card-wrap{
     position: relative;
     z-index: 1;
     min-height: 100vh;
@@ -54,88 +54,81 @@ body {
     padding: 24px;
 }
 
-.login-card {
-    width: min(640px, 92vw);
-    background-color: var(--card-bg);
+.login-card{
+    width:min(640px,92vw);
+    background: var(--card-bg);
     border-radius: 18px;
     box-shadow: 0 16px 42px rgba(0,0,0,0.14);
     padding: 46px 44px 60px;
     text-align: center;
 }
 
-.login-logo {
+.login-logo{
     margin-top: 80px;
     font-family: "KERIS", sans-serif;
     font-size: 64px;
     line-height: 1;
-    letter-spacing: 2px;
+    letter-spacing:2px;
 }
-
-.logo-l {
+.logo-l{
     color: var(--orange);
     display: inline-block;
     transform: rotate(-2deg);
     text-shadow: 0 4px 0 rgba(0,0,0,0.06);
 }
-
-.logo-t {
+.logo-t{
     color: var(--black);
     display: inline-block;
     transform: rotate(-2deg);
     text-shadow: 0 4px 0 rgba(0,0,0,0.06);
 }
-
-.logo-e {
+.logo-e{
     color: var(--mint);
     display: inline-block;
     transform: rotate(-2deg);
     text-shadow: 0 4px 0 rgba(0,0,0,0.06);
 }
-
-.login-subtitle {
-    margin-top: 30px;
+.login-subtitle{
+    margin-top:30px;
     font-family: "KERIS", sans-serif;
     font-size: 18px;
     letter-spacing: 1.5px;
 }
 
-.sub-l {
-    color: var(--orange);
+.sub-l{
+    color: var(--orange)
 }
-.sub-t {
-    color: var(--black);
+.sub-t{
+    color: var(--black)
 }
-.sub-e {
-    color: var(--mint);
+.sub-e{
+    color: var(--mint)
 }
-.sub-rest {
-    color: var(--gray-dark);
+.sub-rest{
+    color: var(--gray-dark)
 }
-
-.kakao-login-btn {
-    margin: 50px auto 0;
+.kakao-login-btn{
+    margin:50px auto 0;
     border: none;
     background: none;
     padding: 0;
     cursor: pointer;
 }
 
-.kakao-login-btn img {
+.kakao-login-btn img{
     width: 100%;
     max-width: 430px;
     height: auto;
     display: block;
 }
-
-.kakao-login-btn:hover img {
+.kakao-login-btn:hover img{
     filter: brightness(0.98);
 }
-
-.kakao-login-btn:active img {
-    transform: translate(1px);
+.kakao-login-btn:active img{
+    transform: translateY(1px);
 }
 
-.login-footer {
+.login-footer{
     margin-top: 140px;
     display: flex;
     justify-content: center;
@@ -146,7 +139,6 @@ body {
     color: var(--black);
     opacity: 0.85;
 }
-
-.copyright-icon {
+.copyright-icon{
     font-weight: 700;
 }

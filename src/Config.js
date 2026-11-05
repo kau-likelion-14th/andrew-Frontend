@@ -8,8 +8,13 @@ const config = {
     WITHDRAW: "/api/auth/withdraw",
   },
 
-  // 이번 시간에 추가할 API 주소
   FOLLOW: {
+    PROFILE: (id) => `/api/follow/${encodeURIComponent(id)}`,
+    TODOS: (id) => `/api/follow/${encodeURIComponent(id)}/todos`,
+    CALENDAR: (id) => `/api/follow/${encodeURIComponent(id)}/calendar`,
+    AVAILABLE: "/api/follow",
+    SEARCH: "/api/follow/search",
+    CREATE: "/api/follow",
     FOLLOWINGS: "/api/follow/followings",
     DELETE: "/api/follow",
   },
