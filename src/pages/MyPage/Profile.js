@@ -1,18 +1,39 @@
-import React, {useRef, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import profileImg from "../../assets/img/profile.png";
 import profileEdit from "../../assets/img/imgedit.png";
 import profilemusic from "../../assets/img/search.png";
+import { get, put, uploadProfile } from "../../Api";
+import config from "../../Config";
 
 const Profile = () => {
   const fileInputRef = useRef(null);
 
-  const [nickname] = useState("Likelion#1253");
+  const [nickname, setNickname] = useState("Likelion#1253");
   const [intro, setIntro] = useState("안녕하세요");
   const [song, setSong] = useState("내꺼하자 - 인피니트");
 
-  const [profileImageUrl] = useState(null);
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+
+  const fetchProfileData = useCallback(async () => {
+    try {
+      const response = await get(config.PROFILE.GET);
+      const result = response?.result;
+
+      if (!result) return;
+
+      setNickname(result.username ?? "");
+      setIntro(result.introduction ?? "");
+      setProfileImageUrl(result.profileImageUrl ?? null);
+    } catch (error) {
+      console.error("프로필 데이터를 가져오는 중 오류 발생:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProfileData();
+  }, [fetchProfileData]);
 
   const handleClickEditIcon = () => {
     fileInputRef.current?.click();
@@ -30,14 +51,42 @@ const Profile = () => {
 
   const displayImageSrc = previewUrl || profileImageUrl || profileImg;
 
-  const handleSave = () => {
-    console.log("저장될 프로필 데이터:", {
-      intro,
-      song,
-      selectedImageFile,
-    });
+  const handleSave = async () => {
+    try {
+      // 1. 한 줄 소개 수정
+      await put(config.PROFILE.INTRO, {
+        introduce: intro,
+      });
 
-    alert("프로필이 임시로 저장됐어요! (API 연결 전)");
+      // 2. 새로운 이미지가 있을 때만 업로드
+      if (selectedImageFile) {
+        await uploadProfile(
+          config.PROFILE.PUT,
+          { imageFile: selectedImageFile },
+          { imageField: "image" }
+        );
+      }
+
+      // 3. 최신 프로필 조회
+      await fetchProfileData();
+
+      // 4. 이미지 미리보기 상태 초기화
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+
+      setPreviewUrl(null);
+      setSelectedImageFile(null);
+
+      alert("프로필이 저장되었습니다!");
+    } catch (error) {
+      console.error("프로필 저장 실패:", error);
+
+      const message =
+        error.response?.data?.message ?? "프로필 저장에 실패했습니다.";
+
+      alert(message);
+    }
   };
 
   return (

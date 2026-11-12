@@ -132,4 +132,40 @@ export const patch = async (endpoint, data = {}, options = {}) => {
   return response.data;
 };
 
+export const uploadProfile = async (
+  endpoint,
+  { intro, song, imageFile },
+  {
+    introField = "intro",
+    songField = "song",
+    imageField = "image",
+    method = "put",
+    ...options
+  } = {}
+) => {
+  const formData = new FormData();
+
+  if (intro !== undefined) formData.append(introField, intro);
+  if (song !== undefined) formData.append(songField, song);
+
+  if (imageFile) {
+    // 1. 실제 파일이 있으면 파일을 담음
+    formData.append(imageField, imageFile);
+  } else {
+    // 2. 파일이 없으면(null), 빈 파일 객체를 만들어 보냄 
+    formData.append(imageField, new Blob([]), "empty.png");
+  }
+
+  const response = await api.request({
+    url: endpoint,
+    method,
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+    ...options,
+  });
+
+  validateContentType(response);
+  return response.data;
+};
+
 export default api;
