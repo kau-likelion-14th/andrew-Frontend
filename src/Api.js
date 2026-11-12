@@ -88,4 +88,48 @@ api.interceptors.response.use(
 
 
 
+const validateContentType = (response) => {
+  const contentType = response.headers?.["content-type"] || "";
+  if (!contentType.includes("json")) {
+    console.warn("JSON이 아닌 응답 Content-Type:", contentType);
+  }
+};
+
+// ===== 공통 요청 함수들 =====
+
+// GET
+export const get = async (endpoint, params = {}, options = {}) => {
+  const response = await api.get(endpoint, { params, ...options });
+  validateContentType(response);
+  return response.data;
+};
+
+// POST (JSON)
+export const post = async (endpoint, data, options = {}) => {
+  const response = await api.post(endpoint, data, options);
+  validateContentType(response);
+  return response.data;
+};
+
+// PUT (JSON)
+export const put = async (endpoint, data = {}, options = {}) => {
+  const response = await api.put(endpoint, data, options);
+  validateContentType(response);
+  return response.data;
+};
+
+// DELETE
+export const del = async (endpoint, options = {}) => {
+  const response = await api.delete(endpoint, options);
+  validateContentType(response);
+  return response.data;
+};
+
+// PATCH (일반 JSON PATCH)
+export const patch = async (endpoint, data = {}, options = {}) => {
+  const response = await api.patch(endpoint, data, options);
+  validateContentType(response);
+  return response.data;
+};
+
 export default api;

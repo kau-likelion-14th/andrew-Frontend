@@ -18,6 +18,20 @@ const config = {
     FOLLOWINGS: "/api/follow/followings",
     DELETE: "/api/follow",
   },
+
+  CALENDAR: {
+    GET: "/api/todos/calendar",
+  },
+
+  CATEGORIES: {
+    GET: "/api/categories",
+  },
+
+  TODOS: {
+    LIST: "/api/todos",
+    TOGGLE_COMPLETE: (todoId, date) =>
+      `/api/todos/${todoId}/dates/${date}/complete`,
+  },
 };
 
 export default config;
