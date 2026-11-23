@@ -92,8 +92,7 @@ const MainPage = () => {
       <Todo
         selectedDate={selectedDate}
         todosByDate={todosByDate}
-        setTodosByDate={setTodosByDate}
-        onCompletedChange={() => setRefreshKey((key) => key + 1)}
+        onTodosChange={() => setRefreshKey((key) => key + 1)}
       />
     </div>
   );
