@@ -1,18 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/Todo.css";
 import RoutineModal from "./RoutineModal";
 
-const TodoModal = ({ 
-    isOpen, 
-    onClose, 
-    onSave, 
-    onDelete, 
+const TodoModal = ({
+    isOpen,
+    onClose,
+    onSave,
+    onDelete,
     initialTodo,
-    categories
+    categories,
 }) => {
     const isEditMode = Boolean(initialTodo);
+    const categoryKeys = Object.keys(categories || {});
 
-    const [category, setCategory] = useState("공부"); 
+    const defaultCategory = categoryKeys[0] ?? "";
+
+    const [category, setCategory] = useState(defaultCategory);
     const [text, setText] = useState("");
     const [routine, setRoutine] = useState(null);
 
@@ -21,29 +24,27 @@ const TodoModal = ({
     useEffect(() => {
         if (!isOpen) return;
 
-        setCategory(initialTodo?.category || "공부");
+        setCategory(initialTodo?.category || defaultCategory);
         setText(initialTodo?.text || "");
         setRoutine(initialTodo?.routine || null);
-    }, [isOpen, initialTodo]);
+    }, [isOpen, initialTodo, defaultCategory]);
 
     if (!isOpen) return null;
 
     const handleSave = () => {
-        if(!text.trim()) return;
+        if (!text.trim() || !category) return;
 
-        onSave({ 
-            text: text.trim(), 
+        onSave({
+            text: text.trim(),
             category,
             routine,
         });
     };
 
-    const categoryKeys = Object.keys(categories);
-
     return (
-        <div className="modal-overlay" onClick={onClose}> 
-            <div 
-                className="modal-container" 
+        <div className="modal-overlay" onClick={onClose}>
+            <div
+                className="modal-container"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-title">
@@ -52,12 +53,13 @@ const TodoModal = ({
                 <div className="modal-section">
                     <div className="modal-label">카테고리</div>
                     <div className="modal-categories">
+                        {categoryKeys.length === 0 && <p>선택할 수 있는 카테고리가 없습니다.</p>}
                         {categoryKeys.map((c) => (
                             <label
                                 key={c}
                                 className={`modal-categoryitem ${category === c ? 'selected' : ''}`}
                             >
-                                <span style={categories[c]}>{c}</span> 
+                                <span style={categories[c]}>{c}</span>
                                 <input
                                     type="radio"
                                     name="category"
@@ -95,14 +97,14 @@ const TodoModal = ({
                     <button
                         className={`leftbutton ${isEditMode ? '' : 'disabled'}`}
                         onClick={onDelete}
-                        disabled={!isEditMode} 
+                        disabled={!isEditMode}
                     >
                         삭제
                     </button>
                     <button
                         className={`rightbutton ${text.trim() ? '' : 'disabled'}`}
                         onClick={handleSave}
-                        disabled={!text.trim()}
+                        disabled={!text.trim() || !category}
                     >
                         저장
                     </button>
