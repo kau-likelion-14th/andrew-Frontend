@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -13,10 +12,41 @@ import bg1 from "../../assets/img/login_bg1.jpg";
 import bg2 from "../../assets/img/login_bg2.jpg";
 import bg3 from "../../assets/img/login_bg3.jpg";
 
+const HANDLED_CODE_KEY = "kakaoOAuthHandledCode";
+const LOGIN_ERROR_KEY = "kakaoOAuthError";
+
+// 같은 인가 코드로 백엔드를 두 번 부르지 않도록 요청을 공유한다
+// (StrictMode 재실행·재마운트 시에도 같은 결과를 받음)
+const kakaoLoginRequests = new Map();
+
+function requestKakaoLogin(code) {
+  if (!kakaoLoginRequests.has(code)) {
+    const request = axios
+      .post(config.AUTH.KAKAO, { code }, { withCredentials: true })
+      .then(({ data }) => {
+        const result = data?.result;
+
+        if (data?.isSuccess === false || !result?.accessToken) {
+          throw new Error(data?.message || "로그인 실패");
+        }
+
+        const { accessToken, ...user } = result;
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        return result;
+      });
+
+    kakaoLoginRequests.set(code, request);
+  }
+
+  return kakaoLoginRequests.get(code);
+}
+
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const onceRef = useRef(false);
 
   const backgrounds = useMemo(() => [bg1, bg2, bg3], []);
   const [bg, setBg] = useState(bg1);
@@ -55,42 +85,55 @@ function LoginPage() {
       return;
     }
 
-    if (!code || onceRef.current) return;
-    onceRef.current = true;
+    const handledCode =
+      sessionStorage.getItem(HANDLED_CODE_KEY);
 
-    const expectedState =
-      sessionStorage.getItem("kakaoOAuthState");
+    if (handledCode !== code) {
+      const expectedState =
+        sessionStorage.getItem("kakaoOAuthState");
 
-    if (!expectedState || params.get("state") !== expectedState) {
-      setError("로그인 요청을 확인할 수 없습니다. 다시 시도해 주세요.");
+      if (!expectedState || params.get("state") !== expectedState) {
+        setError("로그인 요청을 확인할 수 없습니다. 다시 시도해 주세요.");
+        return;
+      }
+
+      sessionStorage.removeItem("kakaoOAuthState");
+      sessionStorage.removeItem(LOGIN_ERROR_KEY);
+      sessionStorage.setItem(HANDLED_CODE_KEY, code);
+    } else if (!kakaoLoginRequests.has(code)) {
+      // 이전 페이지 로드에서 이미 처리한 code (예: 새로고침)
+      setError(
+        sessionStorage.getItem(LOGIN_ERROR_KEY) ||
+          "이미 처리된 로그인 요청입니다. 다시 로그인해 주세요."
+      );
       return;
     }
 
-    sessionStorage.removeItem("kakaoOAuthState");
+    let cancelled = false;
 
-    axios
-      .post(
-        config.AUTH.KAKAO,
-        { code },
-        { withCredentials: true }
-      )
-      .then(({ data }) => {
-        const result = data?.result;
-
-        if (data?.isSuccess === false || !result?.accessToken) {
-          throw new Error(data?.message || "로그인 실패");
-        }
-
-        const { accessToken, ...user } = result;
-
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        navigate("/", { replace: true });
+    requestKakaoLogin(code)
+      .then(() => {
+        if (!cancelled) navigate("/", { replace: true });
       })
-      .catch(() => {
-        setError("로그인에 실패했습니다. 다시 시도해 주세요.");
+      .catch((err) => {
+        const message =
+          err.response?.data?.message ||
+          err.message ||
+          "로그인에 실패했습니다. 다시 시도해 주세요.";
+
+        console.error("[kakao login] failed", {
+          status: err.response?.status,
+          code: err.response?.data?.code,
+          message,
+        });
+
+        sessionStorage.setItem(LOGIN_ERROR_KEY, message);
+        if (!cancelled) setError(message);
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname, location.search, navigate]);
 
   const handleClick = () => {
