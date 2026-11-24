@@ -4,13 +4,15 @@ import profileEdit from "../../assets/img/imgedit.png";
 import profilemusic from "../../assets/img/search.png";
 import { get, put, uploadProfile } from "../../Api";
 import config from "../../Config";
+import YoutubeModal from "./YoutubeModal";
 
 const Profile = () => {
   const fileInputRef = useRef(null);
 
   const [nickname, setNickname] = useState("Likelion#1253");
   const [intro, setIntro] = useState("안녕하세요");
-  const [song, setSong] = useState("내꺼하자 - 인피니트");
+  const [savedSongs, setSavedSongs] = useState([]);
+  const [isSongModalOpen, setIsSongModalOpen] = useState(false);
 
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
@@ -31,9 +33,28 @@ const Profile = () => {
     }
   }, []);
 
+  const fetchSavedSongs = useCallback(async () => {
+    try {
+      const response = await get(config.YOUTUBE.ME);
+      setSavedSongs(response?.result ?? []);
+    } catch (error) {
+      console.error("저장한 노래를 가져오는 중 오류 발생:", error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProfileData();
-  }, [fetchProfileData]);
+    fetchSavedSongs();
+  }, [fetchProfileData, fetchSavedSongs]);
+
+  const openSongModal = () => setIsSongModalOpen(true);
+  const closeSongModal = useCallback(() => setIsSongModalOpen(false), []);
+
+  // 서버가 최근 저장순으로 내려주므로 첫 번째 곡을 대표 곡으로 표시
+  const favoriteSong = savedSongs[0];
+  const favoriteSongText = favoriteSong
+    ? [favoriteSong.title, favoriteSong.artist].filter(Boolean).join(" - ")
+    : "";
 
   const handleClickEditIcon = () => {
     fileInputRef.current?.click();
@@ -146,18 +167,28 @@ const Profile = () => {
                     <div className="profile-content">
                         <input
                             className="profile-content-input"
-                            value={song}
-                            onChange={(e) => setSong(e.target.value)}
+                            value={favoriteSongText}
+                            placeholder="좋아하는 노래를 검색해 보세요"
+                            readOnly
+                            onClick={openSongModal}
                         />
                     </div>
                     <img
                         src={profilemusic}
                         alt="프로필 노래 수정 아이콘"
                         className="profile-search-icon"
+                        onClick={openSongModal}
                     />
                 </div>
             </div>
         </div>
+        {isSongModalOpen && (
+            <YoutubeModal
+                savedSongs={savedSongs}
+                onSavedSongsChange={setSavedSongs}
+                onClose={closeSongModal}
+            />
+        )}
     </div>
   );
 };
