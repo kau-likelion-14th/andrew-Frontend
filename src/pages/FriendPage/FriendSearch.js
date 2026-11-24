@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../Api";
+import AvatarImage from "../../components/AvatarImage";
 import config from "../../Config";
 import { toFriendModel } from "./friendModel";
 import "../../styles/FriendSearch.css";
@@ -104,9 +105,12 @@ function FriendSearch({
                     }
                   }}>
                   <div className="friend-avatar" aria-hidden="true">
-                    {user.profileImageUrl
-                      ? <img src={user.profileImageUrl} alt="" className="friend-avatar__img" />
-                      : <UserIcon />}
+                    <AvatarImage
+                      src={user.profileImageUrl}
+                      alt=""
+                      className="friend-avatar__img"
+                      fallback={<UserIcon />}
+                    />
                   </div>
                   <div className="friend-info">
                     <div className="friend-info__top">
