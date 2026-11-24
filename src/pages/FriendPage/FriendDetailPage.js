@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../Api";
+import AvatarImage from "../../components/AvatarImage";
 import config from "../../Config";
 import FriendCalendar from "./FriendCalendar";
 import FriendTodo from "./FriendTodo";
@@ -141,20 +142,17 @@ function FriendDetailPage() {
 
           <div className="friend-detail-page__profile">
             <div className="friend-detail-page__avatar" aria-hidden="true">
-              {friend?.profileImage ? (
-                <img
-                  src={friend.profileImage}
-                  alt="profile"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <UserIcon />
-              )}
+              <AvatarImage
+                src={friend?.profileImage}
+                alt="profile"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+                fallback={<UserIcon />}
+              />
             </div>
 
             <div className="friend-detail-page__profile-info">

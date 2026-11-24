@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/icon/delete.png";
+import AvatarImage from "../../components/AvatarImage";
 import "../../styles/FriendList.css";
 
 function FriendList({
@@ -61,15 +62,12 @@ function FriendList({
                   className="friend-avatar"
                   aria-hidden="true"
                 >
-                  {friend.profileImageUrl ? (
-                    <img
-                      className="friend-avatar__img"
-                      src={friend.profileImageUrl}
-                      alt="프로필 사진"
-                    />
-                  ) : (
-                    <UserIcon />
-                  )}
+                  <AvatarImage
+                    className="friend-avatar__img"
+                    src={friend.profileImageUrl}
+                    alt="프로필 사진"
+                    fallback={<UserIcon />}
+                  />
                 </div>
 
                 <div className="friend-info">

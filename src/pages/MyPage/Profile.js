@@ -97,6 +97,11 @@ const Profile = () => {
                     src={displayImageSrc} 
                     alt="프로필 이미지" 
                     className="profile-img" 
+                    onError={(e) => {
+                      if (e.currentTarget.getAttribute("src") !== profileImg) {
+                        e.currentTarget.src = profileImg;
+                      }
+                    }}
                 />
                 <img
                     src={profileEdit}
