@@ -47,6 +47,13 @@ const config = {
   STATISTICS: {
     GET: "/api/statistic",
   },
+
+  YOUTUBE: {
+    SEARCH: "/api/youtube/search",
+    SAVE: "/api/youtube/save",
+    ME: "/api/youtube/me",
+    DELETE: (songId) => `/api/youtube/save/${encodeURIComponent(songId)}`,
+  },
 };
 
 export default config;

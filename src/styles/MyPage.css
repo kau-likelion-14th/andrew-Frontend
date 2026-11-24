@@ -169,6 +169,7 @@
 .ytm-overlay {
   position: fixed;
   inset: 0;
+  z-index: 9999;
   background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
@@ -320,4 +321,23 @@
 .ytm-tabs,
 .ytm-header {
   flex: 0 0 auto;
+}
+
+.ytm-tab--active {
+  background: #E5F8F1;
+  font-weight: 600;
+}
+
+.ytm-thumb {
+  width: 56px;
+  height: 42px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.ytm-error {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #d9534f;
 }
