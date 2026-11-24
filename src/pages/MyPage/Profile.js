@@ -142,10 +142,11 @@ const Profile = () => {
                     좋아하는 노래
                 </div>
                 <div className="profile-content-box">
+                    <span aria-hidden="true">🎵</span>
                     <div className="profile-content">
                         <input
                             className="profile-content-input"
-                            value={`🎵 ${song}`}
+                            value={song}
                             onChange={(e) => setSong(e.target.value)}
                         />
                     </div>
